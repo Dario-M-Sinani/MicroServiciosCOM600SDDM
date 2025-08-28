@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: agenda_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: agenda_db
+      MYSQL_USER: agenda_user
+      MYSQL_PASSWORD: agenda_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - agenda_network
+
+  # Backend Express API
+  backend:
+    build: ./backend
+    container_name: agenda_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_USER: agenda_user
+      DB_PASSWORD: agenda_pass
+      DB_NAME: agenda_db
+      DB_PORT: 3306
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - agenda_network
+
+  # Frontend Next.js
+  frontend:
+    build: ./frontend
+    container_name: agenda_frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - agenda_network
+
+volumes:
+  mysql_data:
+
+networks:
+  agenda_network:
+    driver: bridge
