@@ -1,0 +1,12 @@
+[
+  { "id": 1, "ci": "1234567", "nombres": "Matias", "apellidos": "Perez", "sexo": "M" },
+  { "id": 2, "ci": "2345678", "nombres": "Mady", "apellidos": "Gomez", "sexo": "F" },
+  { "id": 3, "ci": "3456789", "nombres": "Andres", "apellidos": "Lopez", "sexo": "M" },
+  { "id": 4, "ci": "4567890", "nombres": "Lauren", "apellidos": "Martinez", "sexo": "F" },
+  { "id": 5, "ci": "5678901", "nombres": "Luis", "apellidos": "Rodriguez", "sexo": "M" },
+  { "id": 6, "ci": "6789012", "nombres": "Laura", "apellidos": "Sanchez", "sexo": "F" },
+  { "id": 7, "ci": "7890123", "nombres": "Pedro", "apellidos": "Gonzalez", "sexo": "M" },
+  { "id": 8, "ci": "8901234", "nombres": "Sofia", "apellidos": "Diaz", "sexo": "F" },
+  { "id": 9, "ci": "9012345", "nombres": "Nicolas", "apellidos": "Hernandez", "sexo": "M" },
+  { "id": 10, "ci": "1122334", "nombres": "Elena", "apellidos": "Moreno", "sexo": "F" }
+]

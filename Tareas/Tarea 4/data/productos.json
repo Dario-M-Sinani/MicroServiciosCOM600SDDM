@@ -1,0 +1,12 @@
+[
+  { "id": 1, "nombre": "Laptop", "descripcion": "Laptop de última generación", "marca": "TechCo", "stock": 50 },
+  { "id": 2, "nombre": "Mouse", "descripcion": "Mouse inalámbrico ergonómico", "marca": "TechCo", "stock": 150 },
+  { "id": 3, "nombre": "Teclado", "descripcion": "Teclado mecánico retroiluminado", "marca": "GamerPro", "stock": 100 },
+  { "id": 4, "nombre": "Monitor", "descripcion": "Monitor 4K de 27 pulgadas", "marca": "ViewMax", "stock": 75 },
+  { "id": 5, "nombre": "Webcam", "descripcion": "Webcam HD 1080p", "marca": "StreamZ", "stock": 200 },
+  { "id": 6, "nombre": "Auriculares", "descripcion": "Auriculares con cancelación de ruido", "marca": "SoundBliss", "stock": 120 },
+  { "id": 7, "nombre": "Impresora", "descripcion": "Impresora multifuncional", "marca": "PrintAll", "stock": 40 },
+  { "id": 8, "nombre": "Router", "descripcion": "Router WiFi 6 de alta velocidad", "marca": "NetFast", "stock": 90 },
+  { "id": 9, "nombre": "Disco Duro Externo", "descripcion": "1TB de almacenamiento portátil", "marca": "StoreIt", "stock": 60 },
+  { "id": 10, "nombre": "Silla Gamer", "descripcion": "Silla ergonómica para largas sesiones", "marca": "ComfortSeat", "stock": 30 }
+]
