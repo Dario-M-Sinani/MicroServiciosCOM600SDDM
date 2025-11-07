@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+
+  auth-service-node:
+    build:
+      context: ./1-auth-service-node
+    container_name: auth-service-node
+    restart: unless-stopped
+    env_file:
+      - ./1-auth-service-node/.env
+    depends_on:
+      - Parcial2do 
+    networks:
+      - logistica_net
+
+  vehiculos-service-go:
+    build:
+      context: ./2-vehiculos-service-go
+    container_name: vehiculos-service-go
+    restart: unless-stopped
+    env_file:
+      - ./2-vehiculos-service-go/.env
+    ports:
+      - "50051:50051"
+    depends_on:
+      - Parcial2doMongo 
+    networks:
+      - logistica_net
+
+  envios-service-python:
+    build:
+      context: ./3-envios-service-python
+    container_name: envios-service-python
+    restart: unless-stopped
+    env_file:
+      - ./3-envios-service-python/.env
+    ports:
+      - "3003:3003"
+    depends_on:
+      - Parcial2do             
+      - vehiculos-service-go 
+    networks:
+      - logistica_net
+
+  nginx-proxy:
+    image: nginx:1.23-alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - auth-service-node
+      - vehiculos-service-go
+      - envios-service-python
+    networks:
+      - logistica_net
+
+
+  # MySQL
+  Parcial2do:
+    image: mysql:8.0
+    container_name: Parcial2do # El nombre que querías
+    restart: unless-stopped
+    ports:
+      - "3306:3306" # Exponerlo al host (opcional, bueno para debug)
+    environment:
+      MYSQL_ROOT_PASSWORD: admin # Tu contraseña
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - logistica_net
+
+  # MongoDB
+  Parcial2doMongo:
+    image: mongo:latest
+    container_name: Parcial2doMongo # El nombre que querías
+    restart: unless-stopped
+    ports:
+      - "27017:27017" # Exponerlo al host (opcional)
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin # Tu usuario
+      MONGO_INITDB_ROOT_PASSWORD: admin # Tu contraseña
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - logistica_net
+
+networks:
+  logistica_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongo_data:

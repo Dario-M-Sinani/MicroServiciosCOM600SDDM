@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+// El nombre del paquete proto
+package vehiculo;
+
+// ⬇️ AÑADE ESTA LÍNEA ⬇️
+// Le dice a Go dónde importar este paquete
+option go_package = "vehiculos-service-go/protos";
+
+// El servicio que el Microservicio de Vehículos (Go) expondrá.
+service VehiculoService {
+  // Un método para verificar la disponibilidad de un vehículo.
+  rpc VerificarDisponibilidad (VehiculoRequest) returns (DisponibilidadResponse);
+}
+
+// ... (el resto de tus mensajes)
+message VehiculoRequest {
+  string vehiculo_id = 1; 
+}
+
+message DisponibilidadResponse {
+  bool disponible = 1;
+  string estado_actual = 2;
+}
