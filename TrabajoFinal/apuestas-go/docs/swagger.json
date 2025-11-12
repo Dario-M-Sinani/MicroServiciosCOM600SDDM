@@ -1,0 +1,112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Maneja todas las operaciones de apuestas del sistema.",
+        "title": "API del Microservicio de Apuestas (CasiGano)",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8081",
+    "basePath": "/api/v1",
+    "paths": {
+        "/apuestas": {
+            "post": {
+                "description": "Registra una nueva apuesta de un usuario para un evento.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "apuestas"
+                ],
+                "summary": "Crea una nueva apuesta",
+                "parameters": [
+                    {
+                        "description": "Datos de la nueva apuesta",
+                        "name": "apuesta",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/apuestas.NuevaApuestaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/apuestas.Apuesta"
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Datos inválidos",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error: Interno del servidor",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "apuestas.Apuesta": {
+            "type": "object",
+            "properties": {
+                "creado_en": {
+                    "type": "string"
+                },
+                "cuota": {
+                    "type": "number"
+                },
+                "estado": {
+                    "type": "string"
+                },
+                "evento_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "monto_apostado": {
+                    "type": "number"
+                },
+                "usuario_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "apuestas.NuevaApuestaRequest": {
+            "type": "object",
+            "required": [
+                "evento_id",
+                "monto_apostado",
+                "usuario_id"
+            ],
+            "properties": {
+                "evento_id": {
+                    "type": "string"
+                },
+                "monto_apostado": {
+                    "type": "number"
+                },
+                "usuario_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

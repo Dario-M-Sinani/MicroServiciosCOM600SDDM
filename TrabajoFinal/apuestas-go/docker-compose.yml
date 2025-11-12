@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # --- Servicio de Base de Datos PostgreSQL ---
+  db_apuestas:
+    image: postgres:15-alpine
+    container_name: casigano-db-postgres
+    # ... (el resto de tu configuración de db_apuestas)
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks: # <-- Correcto: el servicio se une a la red
+      - casigano-net
+
+  # --- Tu Microservicio de Apuestas en Go ---
+  apuestas-go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: casigano-svc-apuestas
+    # ... (el resto de tu configuración de apuestas-go)
+    networks: # <-- Correcto: el servicio se une a la red
+      - casigano-net
+
+# --- Volúmenes y Redes ---
+volumes:
+  postgres-data: # El volumen nombrado para persistir la BD
+
+# 
+# !!! ESTE ES EL BLOQUE QUE PROBABLEMENTE FALTA !!!
+# Asegúrate de que esté al nivel raíz (sin indentación)
+#
+networks:
+  casigano-net: # Define la red que los servicios pueden usar
+    driver: bridge

@@ -1,0 +1,74 @@
+basePath: /api/v1
+definitions:
+  apuestas.Apuesta:
+    properties:
+      creado_en:
+        type: string
+      cuota:
+        type: number
+      estado:
+        type: string
+      evento_id:
+        type: string
+      id:
+        type: string
+      monto_apostado:
+        type: number
+      usuario_id:
+        type: string
+    type: object
+  apuestas.NuevaApuestaRequest:
+    properties:
+      evento_id:
+        type: string
+      monto_apostado:
+        type: number
+      usuario_id:
+        type: string
+    required:
+    - evento_id
+    - monto_apostado
+    - usuario_id
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: Maneja todas las operaciones de apuestas del sistema.
+  title: API del Microservicio de Apuestas (CasiGano)
+  version: "1.0"
+paths:
+  /apuestas:
+    post:
+      consumes:
+      - application/json
+      description: Registra una nueva apuesta de un usuario para un evento.
+      parameters:
+      - description: Datos de la nueva apuesta
+        in: body
+        name: apuesta
+        required: true
+        schema:
+          $ref: '#/definitions/apuestas.NuevaApuestaRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apuestas.Apuesta'
+        "400":
+          description: 'Error: Datos inválidos'
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: 'Error: Interno del servidor'
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Crea una nueva apuesta
+      tags:
+      - apuestas
+swagger: "2.0"
